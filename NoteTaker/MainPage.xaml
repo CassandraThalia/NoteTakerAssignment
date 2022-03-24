@@ -1,0 +1,64 @@
+﻿<Page
+    x:Class="NoteTaker.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NoteTaker"
+    xmlns:models="using:NoteTaker.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <CollectionViewSource x:Name="NotesCollection" Source="{x:Bind NotesViewModel.Notes}"></CollectionViewSource>
+        <DataTemplate x:Name="SavedNotesTemplate" x:DataType="models:NoteModel">
+            <StackPanel Orientation="Horizontal" Margin="6">
+                <TextBlock Text="{x:Bind Title}"></TextBlock>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Page.TopAppBar>
+        <CommandBar>
+            <CommandBar.Content>
+                <TextBlock Margin="6" FontSize="20" Text="{x:Bind NotesViewModel.NoteTitle, Mode=TwoWay}"></TextBlock>
+            </CommandBar.Content>
+            <AppBarButton x:Name="saveBTN" Icon="Save" Label="Save" Command="{x:Bind NotesViewModel.SaveCommand}"></AppBarButton>
+            <AppBarButton x:Name="editBTN" Icon="Edit" Label="Edit" Command="{x:Bind NotesViewModel.EditCommand}"></AppBarButton>
+            <AppBarButton x:Name="addBTN" Icon="Add" Label="Add" Command="{x:Bind NotesViewModel.AddCommand}"></AppBarButton>
+            <AppBarButton x:Name="deleteBTN" Icon="Delete" Label="Delete" Command="{x:Bind NotesViewModel.DeleteCommand}"></AppBarButton>
+        </CommandBar>
+    </Page.TopAppBar>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="441*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300*"/>
+            <ColumnDefinition Width="1109*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <TextBox x:Name="searchBox"
+                 Text="{x:Bind NotesViewModel.Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="0" Grid.Column="0" VerticalContentAlignment="Stretch"
+                 PlaceholderText="Search notes...">
+        </TextBox>
+
+        <ScrollViewer Grid.Column="0" Grid.Row="1" Background="AliceBlue">
+            <ListView x:Name="savedNotes" ItemsSource="{Binding Source={StaticResource NotesCollection}}" 
+                      ItemTemplate="{StaticResource SavedNotesTemplate}"
+                      SelectedItem="{x:Bind NotesViewModel.SelectedNote, Mode=TwoWay}">
+            </ListView>
+        </ScrollViewer>
+        <TextBox x:Name="noteTB" 
+                 IsReadOnly="{x:Bind NotesViewModel.ReadOnly, Mode=TwoWay}"
+                 TextWrapping="Wrap"
+                 AcceptsReturn="True"
+                 Text="{x:Bind NotesViewModel.NoteContent, Mode=TwoWay}"
+                 PlaceholderText="Type your note here..."
+                 Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="1"/>
+    </Grid>
+</Page>

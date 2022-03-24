@@ -1,0 +1,21 @@
+﻿<ContentDialog
+    x:Class="NoteTaker.SaveNoteDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NoteTaker"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Save Note As"
+    PrimaryButtonText="Save Note"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonText="Cancel"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <Grid>
+        <TextBox  x:Name="saveTB"
+                PlaceholderText="Enter a name for your note"
+                Height="30">
+        </TextBox>
+    </Grid>
+</ContentDialog>
