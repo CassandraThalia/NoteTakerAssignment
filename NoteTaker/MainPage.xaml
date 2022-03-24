@@ -21,7 +21,7 @@
     <Page.TopAppBar>
         <CommandBar>
             <CommandBar.Content>
-                <TextBlock Margin="6" FontSize="20" Text="{x:Bind NotesViewModel.NoteTitle, Mode=TwoWay}"></TextBlock>
+                <TextBlock Margin="10,0,0,0" FontSize="25" Text="{x:Bind NotesViewModel.NoteTitle, Mode=TwoWay}"></TextBlock>
             </CommandBar.Content>
             <AppBarButton x:Name="saveBTN" Icon="Save" Label="Save" Command="{x:Bind NotesViewModel.SaveCommand}"></AppBarButton>
             <AppBarButton x:Name="editBTN" Icon="Edit" Label="Edit" Command="{x:Bind NotesViewModel.EditCommand}"></AppBarButton>
