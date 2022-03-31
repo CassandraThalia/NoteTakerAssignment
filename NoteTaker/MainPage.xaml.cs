@@ -27,9 +27,38 @@ namespace NoteTaker
             this.NotesViewModel = new ViewModels.NotesViewModel();
         }
 
+        private async void aboutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            AboutDialog ad = new AboutDialog();
+            await ad.ShowAsync();
+        }
+
+        private async void exitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialog confirmExit = new ContentDialog()
+            {
+                Title = "Confirm Exit",
+                Content = "Are you sure you want to exit?",
+                PrimaryButtonText = "Exit",
+                SecondaryButtonText = "Cancel"
+            };
+            ContentDialogResult result = await confirmExit.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                Application.Current.Exit();
+            }
+            else
+            {
+                //Cancel exit
+            }
+        }
     }
 }
 
 
 //Resources:
 //https://docs.microsoft.com/en-us/windows/apps/design/controls/command-bar
+//https://stackoverflow.com/questions/32677597/how-to-exit-or-close-an-uwp-app-programmatically-windows-10
+//https://stackoverflow.com/questions/3825433/c-sharp-remove-invalid-characters-from-filename
+//Logo sourced from Canva.com

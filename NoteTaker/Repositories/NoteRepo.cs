@@ -10,69 +10,62 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
+using NoteTaker.Commands;
 
 namespace NoteTaker.Repositories
 {
     public class NoteRepo
     {
-        //public StorageFolder _notesFolder = ApplicationData.Current.LocalFolder;
+        public static String createFileName(String fileName)
+        {
+            return fileName + ".txt";
+        }
+
+        public static void UpdateNotesOnSave(String fileName, ObservableCollection<NoteModel> notes, NoteModel selected, NoteModel newNote)
+        {
+            //If it is an update of an existing note, remove it first and replace it with new note (maybe cheating shhh)
+            if (selected != null)
+            {
+                if (selected.Title == fileName)
+                {
+                    notes.Remove(selected);
+                }
+            }
+            //Add new note to notes list
+            notes.Add(newNote);
+        }
 
         public async static void SaveNotesToFile(String noteContent, String fileName, ObservableCollection<NoteModel> notes, NoteModel selected)
         {
-            //First, check for duplicate file names
-            bool dup = false;
-            if (selected == null)
-            {
-                foreach (NoteModel note in notes)
-                {
-                    if (fileName == note.Title)
-                    {
-                        dup = true;
-                    }
-                }
-            }
-            if (dup)
-            {
-                ContentDialog dupDialog = new ContentDialog()
-                {
-                    Title = "Duplicate Filename Error",
-                    Content = "Please enter an original name for your note",
-                    PrimaryButtonText = "OK",
-                };
-                await dupDialog.ShowAsync();
-            }
-            //If not a duplicate, proceed with save
-            else
-            {
-                string ffName = fileName + ".txt";
+            string ffName = createFileName(fileName);
 
-                //No idea why, but my computer really did not like it when I made this a private member variable, 
-                //Would only work for write or read when I instantiated the StorageFolder within the function...
-                StorageFolder _notesFolder = ApplicationData.Current.LocalFolder;
+            StorageFolder _notesFolder = ApplicationData.Current.LocalFolder;
 
-                try
-                {
-                    //Create new file with note's properties
-                    StorageFile noteFile = await _notesFolder.CreateFileAsync(ffName, CreationCollisionOption.ReplaceExisting);
-                    await FileIO.WriteTextAsync(noteFile, noteContent);
-                    //Create new NoteModel with updated data
-                    NoteModel nm = new NoteModel(noteContent, fileName);
-                    //If it is an update of an existing note, remove it first
-                    if (selected != null)
-                    {
-                        if (selected.Title == fileName)
-                        {
-                            notes.Remove(selected);
-                        }
-                    }
-                    //Add new note to notes list
-                    notes.Add(nm);
-                }
-                catch (Exception e)
-                {
-                    Debug.Write(e);
-                }
-            }    
+            try
+            {
+                //Create new file with note's properties
+                StorageFile noteFile = await _notesFolder.CreateFileAsync(ffName, CreationCollisionOption.ReplaceExisting);
+                await FileIO.WriteTextAsync(noteFile, noteContent);
+                //Create new NoteModel with updated data
+                NoteModel newNote = new NoteModel(noteContent, fileName);
+                //Add it to notes observable collection
+                UpdateNotesOnSave(fileName, notes, selected, newNote);
+                
+            }
+            catch (Exception e)
+            {
+                Debug.Write("File save error" + e);
+            }
+               
+        }
+
+        private static void AddNotesToObservableCol(String fileName, ObservableCollection<NoteModel> notes, String noteContent)
+        {
+            if (fileName != ".txt")
+            {
+                NoteModel NM = new NoteModel(noteContent, Path.GetFileNameWithoutExtension(fileName));
+                notes.Add(NM);
+            }
         }
 
         public async static void LoadNotesFromFile(ObservableCollection<NoteModel> notes)
@@ -86,18 +79,14 @@ namespace NoteTaker.Repositories
                 //Loop through each file and add note info to Note objects, then add them to notes list
                 foreach (StorageFile file in fileList)
                 {
-                    string text = await FileIO.ReadTextAsync(file);
+                    string noteContent = await FileIO.ReadTextAsync(file);
                     //It kept adding a blank note at the start for no reason, this is to account for that
-                    if (file.Name != ".txt")
-                    {
-                        NoteModel NM = new NoteModel(text, Path.GetFileNameWithoutExtension(file.Name));
-                        notes.Add(NM);
-                    }
+                    AddNotesToObservableCol(file.Name, notes, noteContent);
                 }
             }
             catch (Exception e)
             {
-                Debug.Write(e);
+                Debug.Write("File load error" + e);
             }
         }
 

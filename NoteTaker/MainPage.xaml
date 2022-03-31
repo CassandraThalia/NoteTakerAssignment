@@ -21,12 +21,16 @@
     <Page.TopAppBar>
         <CommandBar>
             <CommandBar.Content>
-                <TextBlock Margin="10,0,0,0" FontSize="25" Text="{x:Bind NotesViewModel.NoteTitle, Mode=TwoWay}"></TextBlock>
+                <TextBlock Width="290" TextAlignment="Center" FontSize="25" Text="{x:Bind NotesViewModel.NoteTitle, Mode=TwoWay}"></TextBlock>
             </CommandBar.Content>
             <AppBarButton x:Name="saveBTN" Icon="Save" Label="Save" Command="{x:Bind NotesViewModel.SaveCommand}"></AppBarButton>
             <AppBarButton x:Name="editBTN" Icon="Edit" Label="Edit" Command="{x:Bind NotesViewModel.EditCommand}"></AppBarButton>
             <AppBarButton x:Name="addBTN" Icon="Add" Label="Add" Command="{x:Bind NotesViewModel.AddCommand}"></AppBarButton>
             <AppBarButton x:Name="deleteBTN" Icon="Delete" Label="Delete" Command="{x:Bind NotesViewModel.DeleteCommand}"></AppBarButton>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Name="aboutBtn" Label="About" Click="aboutBtn_Click"></AppBarButton>
+                <AppBarButton x:Name="exitBtn" Label="Exit" Click="exitBtn_Click"></AppBarButton>
+            </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.TopAppBar>
 
@@ -59,6 +63,8 @@
                  AcceptsReturn="True"
                  Text="{x:Bind NotesViewModel.NoteContent, Mode=TwoWay}"
                  PlaceholderText="Type your note here..."
-                 Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="1"/>
+                 Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="1"
+                 Margin="60" FontSize="16" Padding="30"
+                 BorderBrush="DarkSlateGray" BorderThickness="3" CornerRadius="15"/>
     </Grid>
 </Page>

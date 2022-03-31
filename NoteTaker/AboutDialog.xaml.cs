@@ -1,10 +1,9 @@
-﻿using NoteTaker.Models;
-using NoteTaker.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -19,26 +18,28 @@ using Windows.UI.Xaml.Navigation;
 
 namespace NoteTaker
 {
-    public sealed partial class SaveNoteDialog : ContentDialog
-    { 
-        public string FileName { get; set; }
-        public SaveNoteDialog(NoteModel selected)
+    public sealed partial class AboutDialog : ContentDialog
+    {
+        public AboutDialog()
         {
             this.InitializeComponent();
-            if (selected != null)
-            {
-                saveTB.Text = selected.Title;
-            }
+            Package package = Package.Current;
+            PackageId packageId = package.Id;
+            PackageVersion version = packageId.Version;
+            String appName = package.DisplayName;
+            String pub = package.PublisherDisplayName;
+
+            AppInfo.Text = string.Format("Local Note © Cassandra\nOriginal Name: " + appName +
+                "\nPublisher: " + pub +
+                "\nVersion : {0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            FileName = saveTB.Text;
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            //Exit button
         }
     }
 }

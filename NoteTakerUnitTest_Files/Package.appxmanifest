@@ -1,20 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   IgnorableNamespaces="uap mp">
 
-  <Identity
-    Name="bcb510e0-92bc-4d71-88a0-8a47d85796e1"
-    Publisher="CN=cassa"
-    Version="1.0.0.0" />
+  <Identity Name="4c7676ed-1f5a-46fc-a39e-f5de27792586"
+            Publisher="CN=cassa"
+            Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="bcb510e0-92bc-4d71-88a0-8a47d85796e1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="4c7676ed-1f5a-46fc-a39e-f5de27792586" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>NoteTaker</DisplayName>
+    <DisplayName>NoteTakerUnitTest_Files</DisplayName>
     <PublisherDisplayName>cassa</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -24,26 +22,25 @@
   </Dependencies>
 
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="x-generate" />
   </Resources>
-
   <Applications>
-    <Application Id="App"
-      Executable="$targetnametoken$.exe"
-      EntryPoint="NoteTaker.App">
+    <Application Id="vstest.executionengine.universal.App"
+        Executable="$targetnametoken$.exe"
+        EntryPoint="NoteTakerUnitTest_Files.App">
       <uap:VisualElements
-        DisplayName="Local Note"
+        DisplayName="NoteTakerUnitTest_Files"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="For when you need to take some notes."
+        Description="NoteTakerUnitTest_Files"
         BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Local Note"/>
-        <uap:SplashScreen Image="Assets\SplashScreen.png"  BackgroundColor="#4db5ff"/>
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
     </Application>
   </Applications>
-
   <Capabilities>
-    <Capability Name="internetClient" />
+    <Capability Name="internetClientServer" />
+    <Capability Name="privateNetworkClientServer" />
   </Capabilities>
 </Package>

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.UI.Xaml.Controls;
+using NoteTaker.Repositories;
+using System.Diagnostics;
 
 namespace NoteTaker.Commands
 {
@@ -28,10 +31,40 @@ namespace NoteTaker.Commands
             return _nvm.SelectedNote != null;
         }
 
-        public void Execute(object parameter)
+        public async void Execute(object parameter)
         {
-            Repositories.NoteRepo.DeleteNotes(_nvm.Notes, _nvm.SelectedNote);
-            _nvm.PrepFreshNote();
+            ContentDialog confirmDelete = new ContentDialog()
+            {
+                Title = "Delete Note?",
+                Content = "Are you sure you want to delete your note?",
+                PrimaryButtonText = "Delete",
+                SecondaryButtonText = "Cancel"
+            };
+            ContentDialogResult result = await confirmDelete.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                try
+                {
+                    NoteRepo.DeleteNotes(_nvm.Notes, _nvm.SelectedNote);
+                    ContentDialog deledeD = new ContentDialog()
+                    {
+                        Title = "Note Deleted",
+                        Content = "You successfully deleted your note!",
+                        PrimaryButtonText = "OK"
+                    };
+                    await deledeD.ShowAsync();
+                }
+                catch (Exception e)
+                {
+                    Debug.Write("File delete error" + e);
+                }
+                _nvm.PrepFreshNote();
+            }
+            else if (result == ContentDialogResult.Secondary)
+            {
+                //Cancel delete
+            }
         }
     }
 }

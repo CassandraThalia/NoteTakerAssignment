@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteTaker", "NoteTaker\NoteTaker.csproj", "{304E3B72-B520-4E17-8BDD-20FD2293CF6F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteTakerUnitTest_Files", "NoteTakerUnitTest_Files\NoteTakerUnitTest_Files.csproj", "{19195A8B-8323-41DA-BFE5-2BC60B95D54E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -41,6 +43,30 @@ Global
 		{304E3B72-B520-4E17-8BDD-20FD2293CF6F}.Release|x86.ActiveCfg = Release|x86
 		{304E3B72-B520-4E17-8BDD-20FD2293CF6F}.Release|x86.Build.0 = Release|x86
 		{304E3B72-B520-4E17-8BDD-20FD2293CF6F}.Release|x86.Deploy.0 = Release|x86
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Debug|ARM.ActiveCfg = Debug|ARM
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Debug|ARM.Build.0 = Debug|ARM
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Debug|ARM.Deploy.0 = Debug|ARM
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Debug|ARM64.Build.0 = Debug|ARM64
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Debug|x64.ActiveCfg = Debug|x64
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Debug|x64.Build.0 = Debug|x64
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Debug|x64.Deploy.0 = Debug|x64
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Debug|x86.ActiveCfg = Debug|x86
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Debug|x86.Build.0 = Debug|x86
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Debug|x86.Deploy.0 = Debug|x86
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Release|ARM.ActiveCfg = Release|ARM
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Release|ARM.Build.0 = Release|ARM
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Release|ARM.Deploy.0 = Release|ARM
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Release|ARM64.ActiveCfg = Release|ARM64
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Release|ARM64.Build.0 = Release|ARM64
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Release|ARM64.Deploy.0 = Release|ARM64
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Release|x64.ActiveCfg = Release|x64
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Release|x64.Build.0 = Release|x64
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Release|x64.Deploy.0 = Release|x64
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Release|x86.ActiveCfg = Release|x86
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Release|x86.Build.0 = Release|x86
+		{19195A8B-8323-41DA-BFE5-2BC60B95D54E}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

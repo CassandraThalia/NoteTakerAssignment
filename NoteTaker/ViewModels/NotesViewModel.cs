@@ -44,6 +44,7 @@ namespace NoteTaker.ViewModels
                 if (value == null)
                 {
                     NoteContent = "";
+                    NoteTitle = "";
                 }
                 else
                 {

@@ -1,9 +1,12 @@
 ﻿using NoteTaker.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
@@ -38,27 +41,99 @@ namespace NoteTaker.Commands
 
             if (result == ContentDialogResult.Primary)
             {
-                try
+
+                //First check if the name has been left blank
+                if (snd.FileName == null)
                 {
-                    //Call Save Notes function from NoteRepo
-                    Repositories.NoteRepo.SaveNotesToFile(nvm.NoteContent, snd.FileName, nvm.Notes, nvm.SelectedNote);
-                    //Show confirm dialog if successful
-                    ContentDialog saveD = new ContentDialog()
+                    ContentDialog blankDialog = new ContentDialog()
                     {
-                        Title = "Note Saved",
-                        Content = "You saved your note!",
+                        Title = "Blank File Name",
+                        Content = "File name cannot be blank",
                         PrimaryButtonText = "OK"
                     };
-                    await saveD.ShowAsync();
+                    await blankDialog.ShowAsync();
+                    Execute(null);
                 }
-                catch (Exception e)
+
+                //Then check if the file name contains illegal characters
+                else if (checkForInvalidChars(snd.FileName)){
+                    ContentDialog invalidDialog = new ContentDialog()
+                    {
+                        Title = "Invalid File Characters",
+                        Content = "File name cannot contain illegal characters",
+                        PrimaryButtonText = "OK"
+                    };
+                    await invalidDialog.ShowAsync();
+                    Execute(null);
+                }
+
+                //Then check if the name is a duplicate (if it is a new note, not an update)
+                else if (checkForDuplicate(snd.FileName, nvm.Notes, nvm.SelectedNote))
                 {
-                    Debug.Write("File Save Error");
+                    ContentDialog dupDialog = new ContentDialog()
+                    {
+                        Title = "Duplicate Filename Error",
+                        Content = "Please enter an original name for your note",
+                        PrimaryButtonText = "OK",
+                    };
+                    await dupDialog.ShowAsync();
+                    Execute(null);
+                }
+
+                //Proceed to save
+                else
+                {
+                    try
+                    {
+                        //Call Save Notes function from NoteRepo
+                        Repositories.NoteRepo.SaveNotesToFile(nvm.NoteContent, snd.FileName, nvm.Notes, nvm.SelectedNote);
+                        //Show confirm dialog if successful
+                        ContentDialog saveD = new ContentDialog()
+                        {
+                            Title = "Note Saved",
+                            Content = "You saved your note!",
+                            PrimaryButtonText = "OK"
+                        };
+                        await saveD.ShowAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Write("File Save Error" + e);
+                    }
                 }
             }
             nvm.PrepFreshNote();
         }
 
+        //Moved the check for duplicate function here from the NoteRepo to be able to re-call the execute function if necessary
+        public static bool checkForDuplicate(String fileName, ObservableCollection<NoteModel> notes, NoteModel selected)
+        {
+            bool dup = false;
+            if (selected == null || fileName != selected.Title)
+            {
+                foreach (NoteModel note in notes)
+                {
+                    if (fileName == note.Title)
+                    {
+                        dup = true;
+                    }
+                }
+            }
+            return dup;
+        }
+
+        public static bool checkForInvalidChars(String fileName)
+        {
+            bool inv = false;
+            foreach (char c in Path.GetInvalidFileNameChars())
+            {
+                if (fileName.Contains(c))
+                {
+                    inv = true;
+                }
+            }
+            return inv;
+        }
     }
 }
 
