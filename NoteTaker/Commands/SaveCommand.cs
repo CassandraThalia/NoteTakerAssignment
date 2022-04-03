@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
 
+
 namespace NoteTaker.Commands
 {
     public class SaveCommand : ICommand
@@ -41,7 +42,6 @@ namespace NoteTaker.Commands
 
             if (result == ContentDialogResult.Primary)
             {
-
                 //First check if the name has been left blank
                 if (snd.FileName == null)
                 {
@@ -85,8 +85,26 @@ namespace NoteTaker.Commands
                 {
                     try
                     {
+                        NoteModel nm;
                         //Call Save Notes function from NoteRepo
-                        Repositories.NoteRepo.SaveNotesToFile(nvm.NoteContent, snd.FileName, nvm.Notes, nvm.SelectedNote);
+                        //Repositories.NoteRepo.SaveNotesToFile(nvm.NoteContent, snd.FileName, nvm.Notes, nvm.SelectedNote);
+                        if (nvm.SelectedNote != null && snd.FileName == nvm.SelectedNote.Title)
+                        {
+                            nm = Repositories.DataRepo.UpdateData(nvm.NoteContent, snd.FileName);
+                            if (nvm.Notes.Contains(nvm.SelectedNote))
+                            {
+                                nvm.Notes.Remove(nvm.SelectedNote);
+                            }
+                        }
+                        else
+                        {
+                            Repositories.DataRepo.AddData(snd.FileName, nvm.NoteContent);
+                            nm = new NoteModel(nvm.NoteContent, snd.FileName);
+                        }
+
+                        nvm.Notes.Add(nm);
+                        nvm.RefreshSearchList();
+
                         //Show confirm dialog if successful
                         ContentDialog saveD = new ContentDialog()
                         {
@@ -101,8 +119,8 @@ namespace NoteTaker.Commands
                         Debug.Write("File Save Error" + e);
                     }
                 }
+                nvm.PrepFreshNote();
             }
-            nvm.PrepFreshNote();
         }
 
         //Moved the check for duplicate function here from the NoteRepo to be able to re-call the execute function if necessary

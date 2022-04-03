@@ -85,7 +85,8 @@ namespace NoteTaker.ViewModels
 
             Notes = new ObservableCollection<NoteModel>();
 
-            Repositories.NoteRepo.LoadNotesFromFile(Notes);
+            //Repositories.NoteRepo.LoadNotesFromFile(Notes);
+            Notes = Repositories.DataRepo.GetData();
 
             RefreshSearchList(); 
         }
@@ -101,6 +102,8 @@ namespace NoteTaker.ViewModels
                 }
             }
         }
+
+        
 
         //This function is hooked up to ReadOnly property of textbox
         public void ChangeReadOnly(bool b)
@@ -123,10 +126,7 @@ namespace NoteTaker.ViewModels
         //Function to reset textbox and buttons for new entry
         public void PrepFreshNote()
         {
-            if (SelectedNote != null)
-            {
-                SelectedNote = null;
-            }
+            SelectedNote = null;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedNote"));
             ChangeReadOnly(false);
         }

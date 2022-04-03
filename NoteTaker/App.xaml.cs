@@ -30,6 +30,7 @@ namespace NoteTaker
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            Repositories.DataRepo.InitializeDatabase();
         }
 
         /// <summary>

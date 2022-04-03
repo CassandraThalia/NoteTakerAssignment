@@ -46,7 +46,11 @@ namespace NoteTaker.Commands
             {
                 try
                 {
-                    NoteRepo.DeleteNotes(_nvm.Notes, _nvm.SelectedNote);
+                    //NoteRepo.DeleteNotes(_nvm.Notes, _nvm.SelectedNote);
+                    DataRepo.DeleteData(_nvm.SelectedNote.Title);
+                    _nvm.Notes.Remove(_nvm.SelectedNote);
+                    _nvm.RefreshSearchList();
+
                     ContentDialog deledeD = new ContentDialog()
                     {
                         Title = "Note Deleted",
