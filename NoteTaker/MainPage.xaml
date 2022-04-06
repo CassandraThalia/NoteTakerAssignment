@@ -23,13 +23,13 @@
             <CommandBar.Content>
                 <TextBlock Width="290" TextAlignment="Center" FontSize="25" Text="{x:Bind NotesViewModel.NoteTitle, Mode=TwoWay}"></TextBlock>
             </CommandBar.Content>
-            <AppBarButton x:Name="saveBTN" Icon="Save" Label="Save" Command="{x:Bind NotesViewModel.SaveCommand}"></AppBarButton>
-            <AppBarButton x:Name="editBTN" Icon="Edit" Label="Edit" Command="{x:Bind NotesViewModel.EditCommand}"></AppBarButton>
-            <AppBarButton x:Name="addBTN" Icon="Add" Label="Add" Command="{x:Bind NotesViewModel.AddCommand}"></AppBarButton>
-            <AppBarButton x:Name="deleteBTN" Icon="Delete" Label="Delete" Command="{x:Bind NotesViewModel.DeleteCommand}"></AppBarButton>
+            <AppBarButton x:Name="saveBTN" Icon="Save" Label="Save" Command="{x:Bind NotesViewModel.SaveCommand}" ToolTipService.ToolTip="Save this note"></AppBarButton>
+            <AppBarButton x:Name="editBTN" Icon="Edit" Label="Edit" Command="{x:Bind NotesViewModel.EditCommand}" ToolTipService.ToolTip="Edit this note"></AppBarButton>
+            <AppBarButton x:Name="addBTN" Icon="Add" Label="Add" Command="{x:Bind NotesViewModel.AddCommand}" ToolTipService.ToolTip="Begin a new note"></AppBarButton>
+            <AppBarButton x:Name="deleteBTN" Icon="Delete" Label="Delete" Command="{x:Bind NotesViewModel.DeleteCommand}" ToolTipService.ToolTip="Delete this note"></AppBarButton>
             <CommandBar.SecondaryCommands>
-                <AppBarButton x:Name="aboutBtn" Label="About" Click="aboutBtn_Click"></AppBarButton>
-                <AppBarButton x:Name="exitBtn" Label="Exit" Click="exitBtn_Click"></AppBarButton>
+                <AppBarButton x:Name="aboutBtn" Label="About" Click="aboutBtn_Click" ToolTipService.ToolTip="About this app"></AppBarButton>
+                <AppBarButton x:Name="exitBtn" Label="Exit" Click="exitBtn_Click" ToolTipService.ToolTip="Exit this app"></AppBarButton>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.TopAppBar>
@@ -54,7 +54,7 @@
         <ScrollViewer Grid.Column="0" Grid.Row="1" Background="AliceBlue">
             <ListView x:Name="savedNotes" ItemsSource="{Binding Source={StaticResource NotesCollection}}" 
                       ItemTemplate="{StaticResource SavedNotesTemplate}"
-                      SelectedItem="{x:Bind NotesViewModel.SelectedNote, Mode=TwoWay}">
+                      SelectedItem="{x:Bind NotesViewModel.SelectedNote, Mode=TwoWay}" ToolTipService.ToolTip="View this note">
             </ListView>
         </ScrollViewer>
         <TextBox x:Name="noteTB" 

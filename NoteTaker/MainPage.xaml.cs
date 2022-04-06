@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -27,10 +28,16 @@ namespace NoteTaker
             this.NotesViewModel = new ViewModels.NotesViewModel();
         }
 
-        private async void aboutBtn_Click(object sender, RoutedEventArgs e)
+        private void aboutBtn_Click(object sender, RoutedEventArgs e)
         {
-            AboutDialog ad = new AboutDialog();
-            await ad.ShowAsync();
+            try
+            {
+                this.Frame.Navigate(typeof(AboutPage), null);
+            }
+            catch (Exception ex)
+            {
+                Debug.Write("Error opening About Page: " + ex);
+            }
         }
 
         private async void exitBtn_Click(object sender, RoutedEventArgs e)
